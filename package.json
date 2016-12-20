@@ -1,6 +1,6 @@
 {
   "name": "dependency-analyze",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "js code dependency analyze",
   "main": "lib/index.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "test-local": "mocha test/**/*.test.js",
     "test-cov": "istanbul cover _mocha test/**/*.test.js",
     "ci": "npm run lint && npm run test-cov",
-    "beta": "npm test && git release $npm_package_version && tnpm publish --tag beta",
-    "release": "npm test && npm-ensure -t changelog && git release $npm_package_version && tnpm publish",
+    "beta": "npm test && git release $npm_package_version && npm publish --tag beta",
+    "release": "npm test && npm-ensure -t changelog && git release $npm_package_version && npm publish",
     "precommit": "standard && npm-ensure -t deps"
   },
   "ensure": {
