@@ -2,6 +2,7 @@
 1.0.2 / 2016-12-20
 ==================
 
+  * test: add react node support
   * fix: add jsx and other ES syntax support
   * doc: add more detail
 
