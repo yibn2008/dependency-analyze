@@ -83,23 +83,55 @@ analyze.parse('path/to/some/dir')
 
 Parse js code and get it's dependencies.
 
-- **params**
-  - `content` {String} js code
-- **return**
-  - {Array} an dependencies array
+#### params
+
+- `content {String}` js code
+
+#### return
+
+- `{Array}` an dependencies array
 
 ### `analyze.parseCSS(content)`
 
 Parse css (sass/less) code and get it's dependencies.
 
-- **params**
-  - `content` {String} css (sass/less) code
-- **return**
-  - {Array} an dependencies array
+#### params
 
-### `analyze.parse(dir[, matches])`
+- `content {String}` css (sass/less) code
 
-Parse a file/directory, and get it's dependencies
+#### return
+
+- `{Array}` an dependencies array
+
+### `analyze.parse(file[, matches])`
+
+Parse a file/directory, and get it's dependencies.
+
+#### params
+
+- `file {String}` file or dir path
+- `matches {String|Array}` minimatch rules (`String` will be treat as a single rule)
+
+If `matches` is specfied, the files under basedir (`file`) will be filtered; otherwise all files except dot-started file (`.xxx`, \*nix hidden file) will be parsed.
+
+#### return
+
+- `{Array}` if `file` is a File, then dependencies array will be return
+- `{Object}` if `file` is a directory, then a (file => dependencies) Object will be return, just like:
+  ```js
+  return {
+    'dir/index.js': [
+      'dep1',
+      'dep2',
+      ...
+    ],
+    'dir/index.css': [
+      'dep1',
+      'dep2',
+      ...
+    ]
+  }
+  ```
 
 ## Parser
 
