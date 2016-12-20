@@ -1,2 +1,3 @@
 # dependency-analyze
-analyze js/css/sass/less dependencies
+
+js code dependency analyze
