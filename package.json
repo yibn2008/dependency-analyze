@@ -1,6 +1,6 @@
 {
   "name": "dependency-analyze",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "js code dependency analyze",
   "main": "lib/index.js",
   "scripts": {
