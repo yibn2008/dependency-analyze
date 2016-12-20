@@ -14,6 +14,10 @@ import './aaa.scss'
 const xxx = require('bbb')
 
 require.resolve('../ccc.js')
+
+const tpl = () => (
+  <ReactNode></ReactNode>
+)
 `
 
     let deps = analyze.parseJS(content)
