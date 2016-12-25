@@ -4,6 +4,8 @@ js/css code dependency analyze.
 
 ## Usage
 
+### Parse file/dir
+
 Parse javascript/css code:
 
 ```js
@@ -77,6 +79,62 @@ const analyze = require('dependency-analyze')
 analyze.parse('path/to/some/dir')
 ```
 
+### Analyze file
+
+analyze dependencies from content
+
+```js
+const analyze = require('dependency-analyze')
+
+// result: {
+//   '/path/to/mock/file.js', {
+//     deps: [{
+//       parent: '/path/to/mock/file.js',
+//       raw: 'react',
+//       name: 'react',
+//       module: 'react',
+//       file: null
+//     }, {
+//       parent: '/path/to/mock/file.js',
+//       raw: 'react-dom',
+//       name: 'react-dom',
+//       module: 'react-dom',
+//       file: null
+//     }, {
+//       parent: '/path/to/mock/file.js',
+//       raw: './src/index.jsx',
+//       name: './src/index.jsx',
+//       module: null,
+//       file: '/path/to/mock/src/index.jsx'
+//     }],
+//     modules: [
+//       'react',
+//       'react-dom'
+//     ],
+//     relatives: [
+//       '/path/to/mock/src/index.jsx'
+//     ],
+//   },
+//   '/path/to/mock/src/index.jsx': {
+//     deps: [ ... ],
+//     modules: [ ... ],
+//     relatives: [ ... ]
+//   },
+//   ...
+// }
+analyze.analyze({
+  file: '/path/to/mock/file.js',
+  content: `
+import React from "react";
+import ReactDOM from "react-dom";
+import "./src/index.jsx";
+`
+})
+
+// or your can pass file (if file real exists)
+analyze.analyze('/path/to/real/file.js')
+```
+
 ## API
 
 ### `analyze.parseJS(content)`
@@ -133,6 +191,52 @@ If `matches` is specfied, the files under basedir (`file`) will be filtered; oth
     ]
   }
   ```
+
+### `analyze.analyze(file[, options])`
+
+analyze dependencies of specified file (or file content).
+
+#### params
+
+- `file {Mixed}` type of `file` can be `String` (file path) or `Object` (file + content info)
+  - `{String}` the file path
+  - `{Object}` the object of file and content `{ file: ..., content: ... }`
+- `options {Object}` analyze options
+  - depth `{Number}` max resolve depth (default is Infinity)
+  - depResolve `{Function}` custom resolve dep to standard format (e.g. `~xxx` => `xxx`)
+  - filter `{Function}` filter which deps can be resolved, will be invoked with `(dep, currFile)`
+
+`options.depResolve` will be invoked with params `(dep, currFile, defaultResolve)`:
+
+- `dep {String}` original dep string
+- `currFile {String}` current file to resolve
+- `defaultResolve {Function}` default dep resolve function
+
+#### return
+
+will return a object like:
+
+```js
+{
+  '/path/to/entry.js': {
+    deps: [{
+      parent: '/path/to/entry.js',
+      raw: 'react',
+      name: 'react',
+      module: 'react',
+      file: null,
+    }, ...],
+    modules: [
+      'react',
+      ...
+    ],
+    relatives: [
+      '/path/to/a.js',
+      ...
+    ]
+  }
+}
+```
 
 ## Parser
 
