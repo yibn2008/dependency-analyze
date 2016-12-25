@@ -131,7 +131,7 @@ import "./src/index.jsx";
 `
 })
 
-// or your can pass file (if file real exists)
+// or your can pass file (if file exists)
 analyze.analyze('/path/to/real/file.js')
 ```
 
