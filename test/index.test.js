@@ -148,7 +148,8 @@ const tpl = () => (
 
     // analyze with default option
     result = analyze.analyze(entry)
-    assert.deepEqual(simplify(result, basedir), {
+    let actual = simplify(result, basedir)
+    assert.deepEqual(actual, {
       "index.js": {
         "modules": [
           "react",
@@ -183,10 +184,6 @@ const tpl = () => (
         "modules": [],
         "relatives": []
       },
-      "lib/x.json": {
-        "modules": [],
-        "relatives": []
-      },
       "lib/a.scss": {
         "modules": [
           "@alife/mext"
@@ -209,8 +206,26 @@ const tpl = () => (
       "lib/d.css": {
         "modules": [],
         "relatives": []
+      },
+      "lib/x.json": {
+        "modules": [],
+        "relatives": []
       }
     })
+
+    // deep first traversing
+    assert.deepEqual(Object.keys(actual), [
+      "index.js",
+      "lib/a.js",
+      "lib/b.jsx",
+      "lib/c.js",
+      "lib/d.jsx",
+      "lib/a.scss",
+      "lib/_b.scss",
+      "lib/c.css",
+      "lib/d.css",
+      "lib/x.json",
+    ])
 
     // analyze with options:
     // - depth = 1
