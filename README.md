@@ -81,7 +81,7 @@ analyze.parse('path/to/some/dir')
 
 ### Analyze file
 
-analyze dependencies from content
+analyze dependencies from content recursively.
 
 ```js
 const analyze = require('dependency-analyze')
@@ -194,7 +194,7 @@ If `matches` is specfied, the files under basedir (`file`) will be filtered; oth
 
 ### `analyze.analyze(file[, options])`
 
-analyze dependencies of specified file (or file content).
+analyze dependencies of specified file (or file content) recursively.
 
 #### params
 
@@ -202,7 +202,7 @@ analyze dependencies of specified file (or file content).
   - `{String}` the file path
   - `{Object}` the object of file and content `{ file: ..., content: ... }`
 - `options {Object}` analyze options
-  - depth `{Number}` max resolve depth (default is Infinity)
+  - depth `{Number}` max recursive resolve depth (default is Infinity)
   - depResolve `{Function}` custom resolve dep to standard format (e.g. `~xxx` => `xxx`)
   - filter `{Function}` filter which deps can be resolved, will be invoked with `(dep, currFile)`
 
