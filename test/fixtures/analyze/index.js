@@ -7,8 +7,8 @@ import "react/lib/ccc.jsx";
 import "~react-dom";
 
 // external module (scss)
-import "@alife/next/index.scss";
-import "@alife/next/lib/button/index.scss";
+import "@scope/next/index.scss";
+import "@scope/next/lib/button/index.scss";
 
 // relative files
 import "./lib/a";     // a.js
@@ -20,5 +20,5 @@ import "./lib/d.jsx"; // d.jsx
 import "./lib/a.scss";  // a.scss
 
 // other file
-import "@alife/xxx/mock.json";
+import "@scope/xxx/mock.json";
 import "./lib/x.json";

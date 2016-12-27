@@ -71,7 +71,7 @@ const tpl = () => (
     assert.deepEqual(deps, [
       'path',
       'fs',
-      '@alife/test',
+      '@scope/test',
       './b',
       'test-import'
     ])
@@ -99,7 +99,7 @@ const tpl = () => (
       'js/index.js': [
         'path',
         'fs',
-        '@alife/test',
+        '@scope/test',
         './b',
         'test-import'
       ],
@@ -154,8 +154,8 @@ const tpl = () => (
         "modules": [
           "react",
           "react-dom",
-          "@alife/next",
-          "@alife/xxx"
+          "@scope/next",
+          "@scope/xxx"
         ],
         "relatives": [
           "lib/a.js",
@@ -186,7 +186,7 @@ const tpl = () => (
       },
       "lib/a.scss": {
         "modules": [
-          "@alife/mext"
+          "@scope/mext"
         ],
         "relatives": [
           "lib/_b.scss"
@@ -241,7 +241,7 @@ const tpl = () => (
         "modules": [
           "react",
           "react-dom",
-          "@alife/xxx"
+          "@scope/xxx"
         ],
         "relatives": [
           "lib/a.js",
@@ -254,6 +254,37 @@ const tpl = () => (
     })
   })
 
+  it('should analyze multiple entries', function () {
+    let basedir = path.join(__dirname, 'fixtures/analyze')
+    let entries = [{
+      file: path.join(basedir, 'entry1.js'),
+      content: `
+import "@scope/next";
+      `
+    }, {
+      file: path.join(basedir, 'entry2.js'),
+      content: `
+import "@scope/mext";
+`
+    }]
+
+    let result = analyze.analyze(entries)
+    assert.deepEqual(simplify(result, basedir), {
+      "entry1.js": {
+        "modules": [
+          "@scope/next"
+        ],
+        "relatives": []
+      },
+      "entry2.js": {
+        "modules": [
+          "@scope/mext"
+        ],
+        "relatives": []
+      }
+    })
+  })
+
   it('should analyze with custom resolve', function () {
     let basedir = path.join(__dirname, 'fixtures/analyze')
     let entry = path.join(basedir, 'custom-resolve.js')
@@ -261,7 +292,7 @@ const tpl = () => (
     let result = analyze.analyze({
       file: entry,
       content: `
-import "@alife/next";
+import "@scope/next";
 import "{custom-prefix}/lib/a";
 import "./lib/b";
 `
@@ -279,7 +310,7 @@ import "./lib/b";
     assert.deepEqual(simplify(result, basedir), {
       "custom-resolve.js": {
         "modules": [
-          "@alife/next"
+          "@scope/next"
         ],
         "relatives": [
           "lib/a.js",

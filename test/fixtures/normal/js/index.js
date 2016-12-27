@@ -2,7 +2,7 @@
 
 const path = require('path')
 const fs = require('fs')
-const priv = require('@alife/test')
+const priv = require('@scope/test')
 const rel = require('./b')
 
 // require('will-not-be-parsed1')

@@ -123,7 +123,7 @@ const analyze = require('dependency-analyze')
 //   ...
 // }
 analyze.analyze({
-  file: '/path/to/mock/file.js',
+  file: '/path/to/mock/entry.js',
   content: `
 import React from "react";
 import ReactDOM from "react-dom";
@@ -132,7 +132,14 @@ import "./src/index.jsx";
 })
 
 // or your can pass file (if file exists)
-analyze.analyze('/path/to/real/file.js')
+analyze.analyze('/path/to/real/entry.js')
+
+// or multiple entries
+// or your can pass file (if file exists)
+analyze.analyze([
+  '/path/to/real/entry1.js',
+  '/path/to/real/entry2.js'
+])
 ```
 
 ## API
@@ -192,15 +199,16 @@ If `matches` is specfied, the files under basedir (`file`) will be filtered; oth
   }
   ```
 
-### `analyze.analyze(file[, options])`
+### `analyze.analyze(entry[, options])`
 
-analyze dependencies of specified file (or file content) recursively.
+analyze dependencies of specified entry (eg. file path, file content, multiple files) recursively.
 
 #### params
 
-- `file {Mixed}` type of `file` can be `String` (file path) or `Object` (file + content info)
+- `entry {Mixed}` type of `entry` can be `String` (file path) or `Object` (file + content info), or multiple entries
   - `{String}` the file path
   - `{Object}` the object of file and content `{ file: ..., content: ... }`
+  - `{Array}` the array of file or file/content object
 - `options {Object}` analyze options
   - depth `{Number}` max recursive resolve depth (default is Infinity)
   - depResolve `{Function}` custom resolve dep to standard format (e.g. `~xxx` => `xxx`)
